@@ -7,12 +7,16 @@ import Card from "../components/Card";
 import Header from "../components/Header";
 import Sorting from "../components/Sorting";
 import FilterBySubRegion from "../components/FilterBySubRegion";
+import SortByArea from "../components/SortByArea";
 
 function Home() {
   const [searchedCountry, setSearchCountry] = useState();
   const [filterName, setFilterName] = useState();
   const [filter, setFilter] = useState();
   const [sortByOrder, setSortOrder] = useState();
+  const [allSubRegion, setAllSubRegion] = useState([]);
+  const [subregionName, setSubregionName] = useState();
+  const [areaOrder, setAreaOrder] = useState();
   function searchByCountryName(searchedName) {
     setSearchCountry(searchedName);
   }
@@ -24,6 +28,12 @@ function Home() {
     setSortOrder(order);
   }
 
+  function filterSubregion(name) {
+    setSubregionName(name);
+  }
+  function sortByArea(order) {
+    setAreaOrder(order);
+  }
   return (
     <>
       <Header />
@@ -34,7 +44,11 @@ function Home() {
             <Search searchCountry={searchByCountryName} />
             <Filter filterByRegion={filterByRegion} />
             <Sorting sort={sorting} />
-            <FilterBySubRegion />
+            <SortByArea sortByArea={sortByArea} />
+            <FilterBySubRegion
+              allSubregion={allSubRegion}
+              filterSubregion={filterSubregion}
+            />
           </div>
         </section>
 
@@ -43,6 +57,10 @@ function Home() {
             searched={searchedCountry}
             filtered={filterName}
             order={sortByOrder}
+            setSubregion={setAllSubRegion}
+            subregionName={subregionName}
+            setSubregionName={setSubregionName}
+            areaOrder={areaOrder}
           />
         </section>
       </main>

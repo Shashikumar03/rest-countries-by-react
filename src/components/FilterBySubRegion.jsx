@@ -1,7 +1,9 @@
 import React from "react";
 
-function FilterBySubRegion() {
-  function handleClick() {}
+function FilterBySubRegion({ allSubregion, filterSubregion }) {
+  function handleClick(event) {
+    filterSubregion(event.target.text);
+  }
   return (
     <div className="dropdown">
       <button
@@ -13,9 +15,15 @@ function FilterBySubRegion() {
         filter by Subregion
       </button>
       <ul className="dropdown-menu">
-        <li>
-          <a className="dropdown-item" href="#" onClick={handleClick}></a>
-        </li>
+        {allSubregion.map((subregion, index) => {
+          return (
+            <li key={index}>
+              <a className="dropdown-item" href="#" onClick={handleClick}>
+                {subregion}
+              </a>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

@@ -13,7 +13,6 @@ function api() {
       }
     })
     .then((countries) => {
-      
       return countries.reduce((accumulator, countryData) => {
         countryCode[countryData.name.common] = countryData.cca3;
 
@@ -38,7 +37,7 @@ function api() {
         accumulator[countryData.name.common]["Capital"] = countryData.capital;
         accumulator[countryData.name.common]["Top Level Domain"] =
           countryData.tld;
-
+        accumulator[countryData.name.common]["Area"] = countryData.area;
         //    accumulator[countryData.name.common]["capital"] = countryData.capital;
 
         if (

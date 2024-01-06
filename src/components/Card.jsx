@@ -4,7 +4,8 @@ import CardView from "./CardView";
 function Card(probs) {
   const [countriesData, setCountriesData] = useState({});
   const [countryOverview, setCountryOverview] = useState([]);
-  const [allSubRegion, setAllSubRegion] = useState([]);
+  const [subregionByRegion, setSubregionByRegion] = useState();
+  const [subRegion, setSubregion] = useState();
   let subregionObj = {};
 
   useEffect(() => {
@@ -25,15 +26,9 @@ function Card(probs) {
               flag: allCountriesDetails[countryName].flags,
               capital: allCountriesDetails[countryName].Capital,
               subregion: allCountriesDetails[countryName].Subregion,
+              area: allCountriesDetails[countryName].Area,
             };
-            // setAllSubRegion((prevData) => {
-            //   return [...prevData, allCountriesDetails[countryName].Subregion];
-            // });
 
-            // console.log(
-            //   allCountriesDetails[countryName].Region,
-            //   allCountriesDetails[countryName].Subregion
-            // );
             if (subregionObj[allCountriesDetails[countryName].Region]) {
               if (
                 !subregionObj[allCountriesDetails[countryName].Region].includes(
@@ -49,8 +44,8 @@ function Card(probs) {
                 allCountriesDetails[countryName].Subregion
               );
             }
-
-            setAllSubRegion(subregionObj);
+            setSubregionByRegion(subregionObj);
+            // probs.setSubregion(subregionObj);
             accumulator.push(data);
 
             return accumulator;
@@ -68,16 +63,37 @@ function Card(probs) {
   }, []);
 
   let detailsToDisplay = countryOverview;
-  console.log(allSubRegion), "kkkk";
-
+  let subRegionToDisplay;
   if (probs.filtered !== undefined) {
     const filteredRegion = probs.filtered;
-    detailsToDisplay = detailsToDisplay.filter((item) => {
+    detailsToDisplay = countryOverview.filter((item) => {
       if (item.region === filteredRegion) {
         return item;
       }
     });
+
+    for (let key in subregionByRegion) {
+      if (key === probs.filtered) {
+        subRegionToDisplay = subregionByRegion[key];
+      }
+    }
+
+    probs.setSubregion(subRegionToDisplay);
   }
+  let aaa;
+  if (probs.subregionName != undefined) {
+    setSubregion(probs.subregionName);
+    // console.log(probs.subregionName, "subregionname");
+    console.log(probs.subregionName, "ggggg");
+    detailsToDisplay = detailsToDisplay.filter((item) => {
+      if (item.subregion === subRegion) {
+        return item;
+      }
+      // probs.setSubregionName(undefined);
+      aaa = probs.subregion;
+    });
+  }
+
   if (probs.searched !== undefined) {
     detailsToDisplay = detailsToDisplay.filter((item) => {
       const nameToSearch = probs.searched.toLowerCase();
@@ -86,6 +102,8 @@ function Card(probs) {
         return item;
       }
     });
+  }
+  if (probs.areaOrder !== undefined) {
   }
 
   if (probs.order !== undefined) {
@@ -99,20 +117,21 @@ function Card(probs) {
       });
     }
   }
-  // console.log("shashi");
 
   return (
     <>
       <div className="conatiner1" id="firstDiv">
-        {detailsToDisplay
-          ? detailsToDisplay.map((country, index) => {
-              return (
-                <div className="country" key={index} id={index}>
-                  <CardView data={country} />
-                </div>
-              );
-            })
-          : "Result not found"}
+        {detailsToDisplay.length >= 1 ? (
+          detailsToDisplay.map((country, index) => {
+            return (
+              <div className="country" key={index} id={index}>
+                <CardView data={country} />
+              </div>
+            );
+          })
+        ) : (
+          <h1>No such Data Found</h1>
+        )}
       </div>
     </>
   );
