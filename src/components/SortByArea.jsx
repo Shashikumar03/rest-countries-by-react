@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 
 function SortByArea({ sortByArea }) {
   function handleClick(event) {
     const sortingOrder = event.target.text.split(" ")[1];
+
     sortByArea(sortingOrder);
   }
   return (
@@ -13,7 +14,7 @@ function SortByArea({ sortByArea }) {
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        Sort area
+        Sort By area
       </button>
       <ul className="dropdown-menu">
         <li>

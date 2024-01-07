@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 
 function Search({ searchCountry }) {
-  const [searched, setSearch] = useState("");
-
   function handleInputSearch(event) {
-    // setSearch(event.target.value);
-    // console.log(searched, "kkk");
     searchCountry(event.target.value);
   }
 

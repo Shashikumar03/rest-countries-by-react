@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Search from "../components/Search";
 import ErrorBoundary from "./ErrorBoundary";
@@ -8,32 +8,126 @@ import Header from "../components/Header";
 import Sorting from "../components/Sorting";
 import FilterBySubRegion from "../components/FilterBySubRegion";
 import SortByArea from "../components/SortByArea";
+import api from "../service/api";
 
 function Home() {
-  const [searchedCountry, setSearchCountry] = useState();
-  const [filterName, setFilterName] = useState();
-  const [filter, setFilter] = useState();
-  const [sortByOrder, setSortOrder] = useState();
-  const [allSubRegion, setAllSubRegion] = useState([]);
-  const [subregionName, setSubregionName] = useState();
-  const [areaOrder, setAreaOrder] = useState();
-  function searchByCountryName(searchedName) {
-    setSearchCountry(searchedName);
-  }
+  const [reservedData, setReservedData] = useState();
+  const [countriesData, setCountriesData] = useState();
+  const [dataRendering, setDataRedendering] = useState([]);
+  const [dataFilterByRegion, setDataFilterByRegion] = useState([]);
+  const [dataFilterBySubregion, setDataFilterBySubregion] = useState([]);
 
+  const [allSubregionList, setAllSubRegionList] = useState([]);
+
+  useEffect(() => {
+    async function getData() {
+      try {
+        const allCountriesDetails = await api();
+        setCountriesData(allCountriesDetails);
+        setDataRedendering(Object.values(allCountriesDetails));
+        setReservedData(Object.values(allCountriesDetails));
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    getData();
+  }, []);
+
+  // filter by region
   function filterByRegion(selectedRegion) {
-    setFilterName(selectedRegion);
+    setDataFilterBySubregion([]);
+    let allSubregionArr = [];
+
+    const countryFilterByRegion = reservedData.filter((country) => {
+      if (selectedRegion === country.Region) {
+        if (!allSubregionArr.includes(country.Subregion)) {
+          allSubregionArr.push(country.Subregion);
+        }
+        return country;
+      }
+    });
+
+    setAllSubRegionList(allSubregionArr);
+    setDataRedendering(countryFilterByRegion);
+    setDataFilterByRegion(countryFilterByRegion);
   }
-  function sorting(order) {
-    setSortOrder(order);
+  //  sort by population
+  function sortingByPopulation(order) {
+    var data = [...dataRendering];
+    let detailsToDisplay = [];
+    if (order === "asc") {
+      detailsToDisplay = data.sort((a, b) => {
+        return a.population - b.population;
+      });
+    } else {
+      detailsToDisplay = data.sort((a, b) => {
+        return b.population - a.population;
+      });
+    }
+
+    setDataRedendering(detailsToDisplay);
   }
 
-  function filterSubregion(name) {
-    setSubregionName(name);
-  }
+  // sort by area
   function sortByArea(order) {
-    setAreaOrder(order);
+    var data = [...dataRendering];
+    let detailsToDisplay = [];
+
+    if (order === "asc") {
+      detailsToDisplay = data.sort((a, b) => {
+        return a.Area - b.Area;
+      });
+    } else {
+      detailsToDisplay = data.sort((a, b) => {
+        return b.Area - a.Area;
+      });
+    }
+
+    setDataRedendering(detailsToDisplay);
   }
+
+  // filter by subregion
+  function filterSubregion(name) {
+    const filterBySubregion = dataFilterByRegion.filter((item) => {
+      if (item.Subregion === name) {
+        return item;
+      }
+    });
+
+    setDataRedendering(filterBySubregion);
+    setDataFilterBySubregion(filterBySubregion);
+  }
+
+  // searching by sountryName
+  function searchByCountryName(searchedName) {
+    if (dataFilterBySubregion.length > 0) {
+      const a = dataFilterBySubregion.filter((country) => {
+        if (country.name.toLowerCase().includes(searchedName.toLowerCase())) {
+          return country;
+        }
+      });
+
+      setDataRedendering(a);
+    } else if (dataFilterByRegion.length > 0) {
+      const a = dataFilterByRegion.filter((country) => {
+        if (country.name.toLowerCase().includes(searchedName.toLowerCase())) {
+          return country;
+        }
+      });
+
+      setDataRedendering(a);
+    } else {
+      const a = reservedData.filter((country) => {
+        if (country.name.toLowerCase().includes(searchedName.toLowerCase())) {
+          return country;
+        }
+      });
+
+      setDataRedendering(a);
+    }
+  }
+
   return (
     <>
       <Header />
@@ -43,25 +137,17 @@ function Home() {
           <div className="search-and-filter">
             <Search searchCountry={searchByCountryName} />
             <Filter filterByRegion={filterByRegion} />
-            <Sorting sort={sorting} />
+            <Sorting sort={sortingByPopulation} />
             <SortByArea sortByArea={sortByArea} />
             <FilterBySubRegion
-              allSubregion={allSubRegion}
+              allSubregion={allSubregionList}
               filterSubregion={filterSubregion}
             />
           </div>
         </section>
 
         <section className="countries-section1">
-          <Card
-            searched={searchedCountry}
-            filtered={filterName}
-            order={sortByOrder}
-            setSubregion={setAllSubRegion}
-            subregionName={subregionName}
-            setSubregionName={setSubregionName}
-            areaOrder={areaOrder}
-          />
+          <Card dataRendering={dataRendering} />
         </section>
       </main>
     </>

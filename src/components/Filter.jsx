@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 function Filter({ filterByRegion }) {
+  const [regionName, setRegionName] = useState("");
   function handleClick(event) {
-    const selectRegion = event.target.text;
-    filterByRegion(selectRegion);
+    const selectedRegion = event.target.text;
+    setRegionName(selectedRegion);
+    filterByRegion(selectedRegion);
   }
   return (
     <div className="dropdown" id="dropdown">
@@ -14,7 +16,7 @@ function Filter({ filterByRegion }) {
         data-bs-toggle="dropdown"
         aria-expanded="false"
       >
-        Filter by Region
+        Filter by Region:{regionName}
         <span className="fas fa-chevron-down ps-5 align-self-center" />
       </button>
       <ul className="dropdown-menu">
@@ -83,7 +85,7 @@ function Filter({ filterByRegion }) {
             Oceania
           </a>
         </li>
-        <li>
+        {/* <li>
           <a
             className="dropdown-item"
             value="none"
@@ -93,7 +95,7 @@ function Filter({ filterByRegion }) {
           >
             No fiter
           </a>
-        </li>
+        </li> */}
       </ul>
     </div>
   );

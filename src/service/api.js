@@ -60,6 +60,7 @@ function api() {
             countryData.languages
           );
         }
+        accumulator[countryData.name.common]["name"] = countryData.name.common;
         accumulator[countryData.name.common]["flags"] = countryData.flags.png;
         return accumulator;
       }, {});
