@@ -246,7 +246,9 @@ html {
   /* border: 2px solid red; */
   display: flex;
   justify-content: space-between;
+  align-items: centerS;
   flex-wrap: wrap;
+  gap: 0.2rem;
 }
 .borderName {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -256,9 +258,10 @@ html {
   margin-top: 0.8rem;
   padding-left: 1rem;
   padding-right: 1rem;
+  
 }
 .countries-border > a {
   text-decoration: none;
-  /* width: 100%; */
+  width:30%;
   color: var(--dark-blue);
 }
