@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import getCountryDetailById from "../service/api-country-code";
+import Header from "../components/Header";
+import BackButton from "../components/BackButton";
 
 function Details() {
   const { id } = useParams();
@@ -22,6 +24,8 @@ function Details() {
 
   return (
     <>
+      <Header />
+      <BackButton />
       {isError == true ? (
         <p>no such Country exist</p>
       ) : country && isError ? (
@@ -33,15 +37,15 @@ function Details() {
             </div>
             <div className="country-left-details1">
               <p>
-                <span className="details11">Native Name:</span>
+                <span className="details11">Native Name: </span>
                 {country ? country["Native Name"] : null}
               </p>
               <p>
-                <span className="details1">Population:</span>
+                <span className="details1">Population: </span>
                 {country ? country.population : null}
               </p>
               <p>
-                <span className="details1">Region:</span>
+                <span className="details1">Region: </span>
                 {country ? country.Region : null}
               </p>
               <p>
@@ -49,7 +53,7 @@ function Details() {
                 {country ? country.Subregion : null}
               </p>
               <p>
-                <span className="details1">Capital:</span>
+                <span className="details1">Capital: </span>
                 {country ? country.Capital : null}
               </p>
             </div>
@@ -59,28 +63,32 @@ function Details() {
                 {country ? country["Top Level Domain"] : null}
               </p>
               <p>
-                <span className="details1">Currencies:</span>
+                <span className="details1">Currencies: </span>
                 {country ? country["Currency"] : null}
               </p>
               <p>
-                <span className="details1">Langauge:</span>
+                <span className="details1">Langauge: </span>
                 {country ? country["Language"] : null}
               </p>
             </div>
             <div className="border1">
               <div className="border-Text1">
                 <h5>Border Countries</h5>
-                {country && Array.isArray(country.borders) ? (
-                  country.borders.map((name, index) => {
-                    return (
-                      <div key={index} className="borderName">
-                        {name}
-                      </div>
-                    );
-                  })
-                ) : (
-                  <p>no border</p>
-                )}
+                <div className="countries-border">
+                  {country && Array.isArray(country.borders) ? (
+                    country.borders.map((name, index) => {
+                      return (
+                        <Link to={`/country/${name}`} key={index}>
+                          <div key={index} className="borderName">
+                            {name}
+                          </div>
+                        </Link>
+                      );
+                    })
+                  ) : (
+                    <p>no border</p>
+                  )}
+                </div>
               </div>
             </div>
           </div>

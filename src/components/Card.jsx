@@ -13,7 +13,7 @@ function Card({ dataRendering }) {
               <Link
                 to={`/country/${country.code}`}
                 key={index}
-                state={{ country }}
+               
               >
                 <div className="country" id={index}>
                   <CardView country={country} />
