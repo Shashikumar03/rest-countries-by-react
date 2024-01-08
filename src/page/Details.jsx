@@ -70,7 +70,7 @@ function Details() {
             <div className="border1">
               <div className="border-Text1">
                 <h5>Border Countries</h5>
-                {country ? (
+                {country && Array.isArray(country.borders) ? (
                   country.borders.map((name, index) => {
                     return (
                       <div key={index} className="borderName">
