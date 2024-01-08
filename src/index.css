@@ -180,10 +180,10 @@ html {
 /* detail pages */
 
 .back-button {
-  border: 2px solid red;
+  /* border: 2px solid red; */
   border: none;
   background-color: var(--white);
-  margin-left: 1rem;
+  margin-left: 1.5rem;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   padding: 0.6rem;
   border-radius: 0.3rem;
@@ -191,7 +191,7 @@ html {
 .country-detail1 {
   /* border: 2px solid red; */
   margin-top: 2rem;
-  padding: 1rem;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -229,14 +229,16 @@ html {
 
 .details1,
 .details11 {
+  /* border: 2px solid red; */
   font-weight: bold;
-  font-size: 1.1rem;
+  /* font-size: 1.1rem; */
   padding-right: 0.3rem;
 }
 .country-left-details1 > p {
   font-size: 1rem;
   /* border: 2px solid red; */
   display: flex;
+  align-items: center;
 }
 .border1 {
   /* border: 2px solid red; */
@@ -258,10 +260,9 @@ html {
   margin-top: 0.8rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  
 }
 .countries-border > a {
   text-decoration: none;
-  width:30%;
+  width: 30%;
   color: var(--dark-blue);
 }
