@@ -21,7 +21,7 @@ function Details() {
     }
     getData();
   }, [id]);
-
+  if (country) console.log(country.Language.join(","));
   return (
     <>
       <Header />
@@ -68,7 +68,7 @@ function Details() {
               </p>
               <p>
                 <span className="details1">Langauge: </span>
-                {country ? country["Language"] : null}
+                {country ? country.Language.join(",") : null}
               </p>
             </div>
             <div className="border1">
