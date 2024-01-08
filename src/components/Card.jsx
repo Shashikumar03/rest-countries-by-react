@@ -1,16 +1,24 @@
 import { useState, useEffect } from "react";
 import api from "../service/api";
 import CardView from "./CardView";
+import { Link } from "react-router-dom";
 function Card({ dataRendering }) {
+  console.log(dataRendering, "aaaaaaa");
   return (
     <>
-      <div className="conatiner1" id="firstDiv">
+      <div className="container1" id="firstDiv">
         {dataRendering.length >= 1 ? (
           dataRendering.map((country, index) => {
             return (
-              <div className="country" key={index} id={index}>
-                <CardView country={country} />
-              </div>
+              <Link
+                to={`/country/${country.code}`}
+                key={index}
+                state={{ country }}
+              >
+                <div className="country" id={index}>
+                  <CardView country={country} />
+                </div>
+              </Link>
             );
           })
         ) : (

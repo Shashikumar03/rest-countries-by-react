@@ -1,14 +1,15 @@
-import React from "react";
 import axios from "axios";
 
-function api() {
+function getCountryDetailById(id) {
   const countryCode = {};
+  id = id.toLowerCase();
   return axios
-    .get("https://restcountries.com/v3.1/all")
+    .get(`https://restcountries.com/v3.1/alpha/${id}`)
     .then((response) => {
       if (response.statusText !== "OK") {
-        throw Error("data is not receive");
+        throw Error("not getting data");
       } else {
+        // console.log(response.data);
         return response.data;
       }
     })
@@ -64,7 +65,10 @@ function api() {
         return accumulator;
       }, {});
     })
-    .catch((err) => err);
+    .catch((err) => {
+      console.error(err);
+    });
 }
 
-export default api;
+export default getCountryDetailById;
+// https://restcountries.com/v3.1/alpha/Chn

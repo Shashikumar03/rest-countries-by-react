@@ -136,7 +136,7 @@ html {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: var(--dark-blue);
+  /* background-color: var(--dark-blue); */
   margin-top: 2.5rem;
 }
 .country {
@@ -171,4 +171,8 @@ html {
   /* border: 2px solid red; */
   font-size: 1.1rem;
   font-weight: bold;
+}
+.container1 > a {
+  color: var(--very-dark-blue);
+  text-decoration: none;
 }

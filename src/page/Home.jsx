@@ -52,6 +52,7 @@ function Home() {
     setDataRedendering(countryFilterByRegion);
     setDataFilterByRegion(countryFilterByRegion);
   }
+  console.log(reservedData);
   //  sort by population
   function sortingByPopulation(order) {
     var data = [...dataRendering];
