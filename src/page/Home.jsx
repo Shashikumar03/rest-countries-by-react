@@ -177,11 +177,24 @@ function Home() {
           {countriesData && searchBoolean ? (
             <Card dataRendering={dataRendering} />
           ) : searchBoolean ? (
-            <LinearBuffer />
+            <div style={{ marginTop: "2rem" }}>
+              <LinearBuffer />
+            </div>
           ) : spinnerBoolean ? (
-            <CircularIndeterminate />
+            <div style={{ marginTop: "2rem" }}>
+              <CircularIndeterminate />
+            </div>
           ) : (
-            <p>No such Country Found</p>
+            <p
+              className="notFound"
+              style={{
+                textAlign: "center",
+                marginTop: "2rem",
+                fontWeight: "bold",
+              }}
+            >
+              No such Country Found
+            </p>
           )}
         </section>
       </main>
