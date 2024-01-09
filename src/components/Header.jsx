@@ -1,6 +1,10 @@
 import React from "react";
-
+import ModeNightIcon from "@mui/icons-material/ModeNight";
+import LightModeIcon from "@mui/icons-material/LightMode";
 function Header() {
+  function toggleDarkMode() {
+    console.log("shashi");
+  }
   return (
     <>
       <header>
@@ -9,8 +13,8 @@ function Header() {
             <h2>Where in the world?</h2>
 
             <p>
-              <span className="moon">
-                <i className="fa-regular fa-moon" aria-hidden="true"></i>
+              <span className="moon" onClick={toggleDarkMode}>
+                <ModeNightIcon />
               </span>
               Dark Mode
             </p>

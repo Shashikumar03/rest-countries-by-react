@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import SearchIcon from "@mui/icons-material/Search";
 
 function Search({ searchCountry }) {
   function handleInputSearch(event) {
@@ -9,7 +10,7 @@ function Search({ searchCountry }) {
     <>
       <div className="d-flex search">
         <span className="search-icon">
-          <i className="fas fa-search gray-icon"></i>
+          <SearchIcon />
         </span>
         <input
           id="search"

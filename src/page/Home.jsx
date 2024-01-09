@@ -9,6 +9,8 @@ import Sorting from "../components/Sorting";
 import FilterBySubRegion from "../components/FilterBySubRegion";
 import SortByArea from "../components/SortByArea";
 import api from "../service/api";
+import LinearBuffer from "../components/LinearBuffer";
+import CircularIndeterminate from "../components/CircularIndeterminate";
 
 function Home() {
   const [reservedData, setReservedData] = useState();
@@ -16,6 +18,8 @@ function Home() {
   const [dataRendering, setDataRedendering] = useState([]);
   const [dataFilterByRegion, setDataFilterByRegion] = useState([]);
   const [dataFilterBySubregion, setDataFilterBySubregion] = useState([]);
+  const [searchBoolean, SetSearchBoolean] = useState(true);
+  const [spinnerBoolean, setSpinnerBoolean] = useState(false);
 
   const [allSubregionList, setAllSubRegionList] = useState([]);
 
@@ -100,15 +104,21 @@ function Home() {
     setDataFilterBySubregion(filterBySubregion);
   }
 
-  // searching by sountryName
+  // searching by countryName
   function searchByCountryName(searchedName) {
+    setSpinnerBoolean(true);
     if (dataFilterBySubregion.length > 0) {
       const a = dataFilterBySubregion.filter((country) => {
         if (country.name.toLowerCase().includes(searchedName.toLowerCase())) {
           return country;
         }
       });
-
+      if (a.length < 1) {
+        SetSearchBoolean(false);
+      }
+      setTimeout(() => {
+        setSpinnerBoolean(false);
+      }, 2000);
       setDataRedendering(a);
     } else if (dataFilterByRegion.length > 0) {
       const a = dataFilterByRegion.filter((country) => {
@@ -116,15 +126,31 @@ function Home() {
           return country;
         }
       });
-
+      if (a.length < 1) {
+        SetSearchBoolean(false);
+      } else {
+        SetSearchBoolean(true);
+      }
+      setTimeout(() => {
+        setSpinnerBoolean(false);
+      }, 2000);
       setDataRedendering(a);
     } else {
       const a = reservedData.filter((country) => {
         if (country.name.toLowerCase().includes(searchedName.toLowerCase())) {
           return country;
+        } else {
+          SetSearchBoolean(true);
         }
       });
-
+      if (a.length < 1) {
+        SetSearchBoolean(false);
+      } else {
+        SetSearchBoolean(true);
+      }
+      setTimeout(() => {
+        setSpinnerBoolean(false);
+      }, 2000);
       setDataRedendering(a);
     }
   }
@@ -148,7 +174,15 @@ function Home() {
         </section>
 
         <section className="countries-section1">
-          <Card dataRendering={dataRendering} />
+          {countriesData && searchBoolean ? (
+            <Card dataRendering={dataRendering} />
+          ) : searchBoolean ? (
+            <LinearBuffer />
+          ) : spinnerBoolean ? (
+            <CircularIndeterminate />
+          ) : (
+            <p>No such Country Found</p>
+          )}
         </section>
       </main>
     </>

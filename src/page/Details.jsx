@@ -4,6 +4,7 @@ import getCountryDetailById from "../service/api-country-code";
 import Header from "../components/Header";
 import BackButton from "../components/BackButton";
 
+
 function Details() {
   const { id } = useParams();
   const [country, setCountry] = useState();

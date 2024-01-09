@@ -3,18 +3,13 @@ import api from "../service/api";
 import CardView from "./CardView";
 import { Link } from "react-router-dom";
 function Card({ dataRendering }) {
-  console.log(dataRendering, "aaaaaaa");
   return (
     <>
       <div className="container1" id="firstDiv">
         {dataRendering.length >= 1 ? (
           dataRendering.map((country, index) => {
             return (
-              <Link
-                to={`/country/${country.code}`}
-                key={index}
-               
-              >
+              <Link to={`/country/${country.code}`} key={index}>
                 <div className="country" id={index}>
                   <CardView country={country} />
                 </div>
