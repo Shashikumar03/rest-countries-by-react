@@ -3,7 +3,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import getCountryDetailById from "../service/api-country-code";
 import Header from "../components/Header";
 import BackButton from "../components/BackButton";
-
+import CircularIndeterminate from "../components/CircularIndeterminate";
 
 function Details() {
   const { id } = useParams();
@@ -87,7 +87,7 @@ function Details() {
                       );
                     })
                   ) : (
-                    <p>no border</p>
+                    <p> This is a "ISLAND"</p>
                   )}
                 </div>
               </div>
@@ -95,7 +95,7 @@ function Details() {
           </div>
         </div>
       ) : (
-        <p>searching</p>
+        <CircularIndeterminate />
       )}
     </>
   );

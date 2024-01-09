@@ -166,10 +166,12 @@ function Home() {
             <Filter filterByRegion={filterByRegion} />
             <Sorting sort={sortingByPopulation} />
             <SortByArea sortByArea={sortByArea} />
-            <FilterBySubRegion
-              allSubregion={allSubregionList}
-              filterSubregion={filterSubregion}
-            />
+            {allSubregionList.length > 0 ? (
+              <FilterBySubRegion
+                allSubregion={allSubregionList}
+                filterSubregion={filterSubregion}
+              />
+            ) : null}
           </div>
         </section>
 
